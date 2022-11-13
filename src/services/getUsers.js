@@ -12,6 +12,8 @@ export const getUsers = () => {
         "9 Mohammed",
         "10 Jason",
         "11 dummy name",
-        "12 dummy name"
+        "12 dummy name",
+        "13 dummy name",
+        "14 dummy name"
     ]
 }

@@ -48,7 +48,7 @@ function App() {
 
   const previous = () => {
     // if leftIndex - 5 >= 0 -> previous 5
-    if(leftIndex - 5 >= 0 && rightIndex !== users.length) {
+    if(leftIndex - 5 >= 0) {
       setLeftIndex(leftIndex - 5);
       setRightIndex(rightIndex - 5);
     } else if(leftIndex - 5 >=0 && rightIndex === users.length) {
