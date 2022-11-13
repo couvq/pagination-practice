@@ -48,17 +48,18 @@ function App() {
 
   const previous = () => {
     // if leftIndex - 5 >= 0 -> previous 5
-    if(leftIndex - 5 >= 0) {
+    if(leftIndex - 5 >= 0 && rightIndex % 5 === 0) {
       setLeftIndex(leftIndex - 5);
       setRightIndex(rightIndex - 5);
-    } else if(leftIndex - 5 >=0 && rightIndex === users.length) {
+    } else if(leftIndex - 5 >= 0 && rightIndex === users.length) {
+      console.log(users.length % 5)
       // set right index to the highest multiple of 5
       const highestMultipleOf5 = users.length - (users.length % 5);
       setLeftIndex(leftIndex - 5);
       setRightIndex(highestMultipleOf5);
     }else { // if leftIndex < 0 -> show users 0 - 5
       setLeftIndex(0);
-      setRightIndex(rightIndex - 5);
+      setRightIndex(5);
     }
     // otherwise previous button should be disabled
   };
