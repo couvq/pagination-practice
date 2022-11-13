@@ -11,6 +11,7 @@ function App() {
   const [leftIndex, setLeftIndex] = useState(0);
   const [rightIndex, setRightIndex] = useState(5);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
 
   useEffect(() => {
     if(leftIndex >= 0 && rightIndex < users.length) {
@@ -18,9 +19,15 @@ function App() {
       setPaginatedUsers(users.slice(leftIndex, rightIndex));
     }
 
-    if(rightIndex === users.length || rightIndex > users.length) {
+    if(rightIndex === users.length) {
       setPaginatedUsers(users.slice(leftIndex));
       setIsNextDisabled(true);
+    }
+
+    if(leftIndex === 0) {
+      setIsPrevDisabled(true);
+    } else {
+      setIsPrevDisabled(false);
     }
   }, [leftIndex, rightIndex]);
   
@@ -36,11 +43,24 @@ function App() {
       setLeftIndex(leftIndex + 5);
       setRightIndex(users.length);
     }
-    // otherwise nextbutton should be disabled
+    // otherwise next button should be disabled
   };
 
   const previous = () => {
-    // TODO: implement previous function
+    // if leftIndex - 5 >= 0 -> previous 5
+    if(leftIndex - 5 >= 0 && rightIndex !== users.length) {
+      setLeftIndex(leftIndex - 5);
+      setRightIndex(rightIndex - 5);
+    } else if(leftIndex - 5 >=0 && rightIndex === users.length) {
+      // set right index to the highest multiple of 5
+      const highestMultipleOf5 = users.length - (users.length % 5);
+      setLeftIndex(leftIndex - 5);
+      setRightIndex(highestMultipleOf5);
+    }else { // if leftIndex < 0 -> show users 0 - 5
+      setLeftIndex(0);
+      setRightIndex(rightIndex - 5);
+    }
+    // otherwise previous button should be disabled
   };
 
   return (
@@ -52,7 +72,7 @@ function App() {
         Showing users {leftIndex}-{rightIndex} of {users.length}
       </p>
       <Stack direction="row" spacing={2}>
-        <Button variant="contained" onClick={previous} disabled={false}>
+        <Button variant="contained" onClick={previous} disabled={isPrevDisabled}>
           <ChevronLeftIcon />
           Previous 5 users
         </Button>
