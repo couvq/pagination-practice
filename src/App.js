@@ -19,7 +19,7 @@ function App() {
       setPaginatedUsers(users.slice(leftIndex, rightIndex));
     }
 
-    if(rightIndex === users.length) {
+    if(rightIndex >= users.length) {
       setPaginatedUsers(users.slice(leftIndex));
       setIsNextDisabled(true);
     }
@@ -33,6 +33,10 @@ function App() {
   
 
   const next = () => {
+
+    if(users.length < 5) {
+      return;
+    }
     // if rightIndex + 5 <= users.length -> next 5
     if(rightIndex + 5 <= users.length) {
       setLeftIndex(leftIndex + 5);
@@ -47,6 +51,10 @@ function App() {
   };
 
   const previous = () => {
+
+    if(users.length < 5) {
+      return;
+    }
     // if leftIndex - 5 >= 0 -> previous 5
     if(leftIndex - 5 >= 0 && rightIndex % 5 === 0) {
       setLeftIndex(leftIndex - 5);
@@ -70,7 +78,7 @@ function App() {
         <h1>{user}</h1>
       ))}
       <p>
-        Showing users {leftIndex}-{rightIndex} of {users.length}
+        Showing users {leftIndex}-{users.length >= 5 ? rightIndex : users.length} of {users.length}
       </p>
       <Stack direction="row" spacing={2}>
         <Button variant="contained" onClick={previous} disabled={isPrevDisabled}>
